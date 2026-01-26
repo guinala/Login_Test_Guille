@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Firebase Login Test</title>
+        <link rel="stylesheet" href="styleAttr.css">
+    </head>
+    <body>
+        <form id="registrationForm">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">Register</button>
+        </form>
+        <script type="module">
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+            import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-analytics.js";
+            import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+ 
+            const firebaseConfig = {
+                apiKey: "AIzaSyDIdY15uPunXAeUUiyC8uhGxSmVXZ9VAmM",
+                authDomain: "guill23-test.firebaseapp.com",
+                projectId: "guill23-test",
+                storageBucket: "guill23-test.firebasestorage.app",
+                messagingSenderId: "77718658297",
+                appId: "1:77718658297:web:cc23c3ee22e73ced225628",
+                measurementId: "G-ZZNDRPCE4Y"
+            };
+
+            const app = initializeApp(firebaseConfig);
+            const analytics = getAnalytics(app);
+            const auth = getAuth(app);
+
+            const form = document.getElementById('registrationForm');
+            form.addEventListener('submit', (event) => {
+                event.preventDefault();
+                const email = form.email.value;
+                const password = form.password.value;
+                createUserWithEmailAndPassword(auth, email, password)
+                    .then((userCredential) => {
+                        const user = userCredential.user;
+                        console.log('User registered:', user);
+                    })
+                    .catch((error) => {
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+                        console.error('Error:', errorCode, errorMessage);
+                    });
+            });
+
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    const credential = GoogleAuthProvider.credentialFromResult(result);
+                    const token = credential.accessToken;
+                    const user = result.user;
+                    const password = result.password;
+                }).catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    const email = error.customData.email;
+                    const credential = GoogleAuthProvider.credentialFromError(error);
+            });
+        </script>
+    </body>
+</html>
