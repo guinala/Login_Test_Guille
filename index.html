@@ -4,64 +4,65 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Firebase Login Test</title>
-        <link rel="stylesheet" href="styleAttr.css">
+        <link rel="stylesheet" href="index.css">
     </head>
     <body>
-        <form id="registrationForm">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-            <button type="submit">Register</button>
-        </form>
-        <script type="module">
-            import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
-            import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-analytics.js";
-            import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
- 
-            const firebaseConfig = {
-                apiKey: "AIzaSyDIdY15uPunXAeUUiyC8uhGxSmVXZ9VAmM",
-                authDomain: "guill23-test.firebaseapp.com",
-                projectId: "guill23-test",
-                storageBucket: "guill23-test.firebasestorage.app",
-                messagingSenderId: "77718658297",
-                appId: "1:77718658297:web:cc23c3ee22e73ced225628",
-                measurementId: "G-ZZNDRPCE4Y"
-            };
+        <h1>Firebase Login Test</h1>
+        <div class="auth-container">
 
-            const app = initializeApp(firebaseConfig);
-            const analytics = getAnalytics(app);
-            const auth = getAuth(app);
+        <div id="login-screen" class="hidden">
+            <h2>Iniciar Sesión</h2>
+            <form id="login-form" class="auth-form">
+                <input type="email" id="login-email" placeholder="Email" required>
+                <input type="password" id="login-password" placeholder="Contraseña" required>
+                <button type="submit" class="btn-primary">Iniciar Sesión</button>
+                <div id="login-error" class="error-message"></div>
+            </form>
+            
+            <div class="divider"><span>O</span></div>
+            
+            <div class="toggle-link" id="show-register">
+                ¿No tienes cuenta? Regístrate
+            </div>
 
-            const form = document.getElementById('registrationForm');
-            form.addEventListener('submit', (event) => {
-                event.preventDefault();
-                const email = form.email.value;
-                const password = form.password.value;
-                createUserWithEmailAndPassword(auth, email, password)
-                    .then((userCredential) => {
-                        const user = userCredential.user;
-                        console.log('User registered:', user);
-                    })
-                    .catch((error) => {
-                        const errorCode = error.code;
-                        const errorMessage = error.message;
-                        console.error('Error:', errorCode, errorMessage);
-                    });
-            });
+        </div>
 
-            signInWithPopup(auth, provider)
-                .then((result) => {
-                    const credential = GoogleAuthProvider.credentialFromResult(result);
-                    const token = credential.accessToken;
-                    const user = result.user;
-                    const password = result.password;
-                }).catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    const email = error.customData.email;
-                    const credential = GoogleAuthProvider.credentialFromError(error);
-            });
-        </script>
+        <div id="register-screen" class="hidden">
+            <h2>Crear Cuenta</h2>
+            <form id="register-form" class="auth-form">
+                <input type="email" id="register-email" placeholder="Email" required>
+                <input type="password" id="register-password" placeholder="Contraseña (mín. 6 caracteres)" required>
+                <button type="submit" class="btn-primary">Registrarse</button>
+                <div id="register-error" class="error-message"></div>
+            </form>
+            
+            <div class="divider"><span>O</span></div>
+            
+            <div class="toggle-link" id="show-login">
+                ¿Ya tienes cuenta? Inicia sesión
+            </div>
+        </div>
+
+        <div id="user-screen" class="hidden">
+            <div class="user-info">
+                <h2>Bienvenido</h2>
+                <p id="user-email"></p>
+                <p id="user-provider"></p>
+                <button id="logout-btn" class="btn-danger">Cerrar Sesión</button>
+            </div>
+        </div>
+
+        <div id="loading-screen">
+            <p style="text-align: center;">Comprobando credenciales...</p>
+        </div>
+
+        <button id="google-btn" class="btn-secondary">
+            <img class="google-img" src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
+            <span>Continuar con Google</span>
+        </button>
+        <div id="google-error" class="error-message"></div>
+    </div>
+
+    <script type="module" src="index.js"></script>
     </body>
 </html>
