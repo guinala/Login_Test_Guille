@@ -85,8 +85,8 @@ showLoginLink.addEventListener('click', () => {
 // Registro
 registerForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const email = document.getElementById('registerEmail').value;
-    const password = document.getElementById('registerPassword').value;
+    const email = document.getElementById('register-email').value;
+    const password = document.getElementById('register-password').value;
     registerError.textContent = '';
 
     try 
@@ -104,8 +104,8 @@ registerForm.addEventListener('submit', async (e) => {
 // Login
 loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const email = document.getElementById('loginEmail').value;
-    const password = document.getElementById('loginPassword').value;
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;
     loginError.textContent = '';
 
     try 
